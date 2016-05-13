@@ -17,13 +17,21 @@ Vue.use(Router);
 Vue.use(vueSmoothScroll);
 
 Router.beforeEach(function (transition) {
-  this.$SmoothScroll.destroy();
+  window.SmoothScroll.destroy();
   transition.next();
 })
 
 Router.afterEach(function (transition) {
-  this.$SmoothScroll.run();
+  window.SmoothScroll.run();
 })
+
+```
+
+you can alse use it in vue 
+``` javascript
+		this.$SmoothScroll.run();
+		
+		this.$SmoothScroll.destroy();
 
 ```
 
