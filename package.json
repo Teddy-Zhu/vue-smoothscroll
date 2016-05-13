@@ -1,0 +1,26 @@
+{
+  "name": "vue-smoothscroll",
+  "homepage": "http://www.eicoding.com",
+  "version": "0.0.2",
+  "description": "it&#x27;s a vuejs version of smoothscroll",
+  "author": "teddyzhu",
+  "scripts": {
+
+  },
+  "dependencies": {
+    "vue": "^1.0.21"
+  },
+  "readme":"README.md",
+  "main": "waves.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Teddy-Zhu/vue-smoothscroll.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "files": [
+    "Readme.md",
+    "smoothscroll.js"
+  ]
+}
