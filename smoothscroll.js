@@ -13,7 +13,7 @@
 // without getting a written permission first.
 //
 // Vue By Teddy Zhu
-module.exports = function(Vue) {
+module.exports = function (Vue) {
 
     // Scroll Variables (tweakable)
     var defaultOptions = {
@@ -49,7 +49,7 @@ module.exports = function(Vue) {
     // Other Variables
     var isExcluded = false;
     var isFrame = false;
-    var direction = { x: 0, y: 0 };
+    var direction = {x: 0, y: 0};
     var initDone = false;
     var root = document.documentElement;
     var activeElement;
@@ -69,8 +69,10 @@ module.exports = function(Vue) {
         end: 35,
         home: 36
     };
-
-
+    var wheelEvent;
+    var isRun = false;
+    var fullPageElem;
+    var clearfix;
     /***********************************************
      * INITIALIZE
      ***********************************************/
@@ -110,20 +112,20 @@ module.exports = function(Vue) {
         }
 
         /**
-         * Please duplicate this radar for a Safari fix! 
+         * Please duplicate this radar for a Safari fix!
          * rdar://22376037
          * https://openradar.appspot.com/radar?id=4965070979203072
-         * 
+         *
          * Only applies to Safari now, Chrome fixed it in v45:
-         * This fixes a bug where the areas left and right to 
+         * This fixes a bug where the areas left and right to
          * the content does not trigger the onmousewheel event
          * on some pages. e.g.: html, body { height: 100% }
          */
         else if (scrollHeight > windowHeight &&
             (body.offsetHeight <= windowHeight ||
-                html.offsetHeight <= windowHeight)) {
+            html.offsetHeight <= windowHeight)) {
 
-            var fullPageElem = document.createElement('div');
+            fullPageElem = document.createElement('div');
             fullPageElem.style.cssText = 'position:absolute; z-index:-10000; ' +
                 'top:0; left:0; right:0; height:' +
                 root.scrollHeight + 'px';
@@ -131,9 +133,9 @@ module.exports = function(Vue) {
 
             // DOM changed (throttled) to fix height
             var pendingRefresh;
-            refreshSize = function() {
+            refreshSize = function () {
                 if (pendingRefresh) return; // could also be: clearTimeout(pendingRefresh);
-                pendingRefresh = setTimeout(function() {
+                pendingRefresh = setTimeout(function () {
                     if (isExcluded) return; // could be running after cleanup
                     fullPageElem.style.height = '0';
                     fullPageElem.style.height = root.scrollHeight + 'px';
@@ -150,14 +152,14 @@ module.exports = function(Vue) {
                 attributes: true,
                 childList: true,
                 characterData: false
-                    // subtree: true
+                // subtree: true
             };
 
             observer = new MutationObserver(refreshSize);
             observer.observe(body, config);
 
             if (root.offsetHeight <= windowHeight) {
-                var clearfix = document.createElement('div');
+                clearfix = document.createElement('div');
                 clearfix.style.clear = 'both';
                 body.appendChild(clearfix);
             }
@@ -174,17 +176,24 @@ module.exports = function(Vue) {
      * Removes event listeners and other traces left on the page.
      */
     function cleanup() {
-        observer && observer.disconnect();
-        removeEvent(wheelEvent, wheel);
-        removeEvent('mousedown', mousedown);
-        removeEvent('keydown', keydown);
-        removeEvent('resize', refreshSize);
-        removeEvent('load', init);
+        if (isRun) {
+            observer && observer.disconnect();
+            removeEvent(wheelEvent, wheel);
+            removeEvent('mousedown', mousedown);
+            removeEvent('keydown', keydown);
+            removeEvent('resize', refreshSize);
+            removeEvent('load', init);
+            fullPageElem && document.body.removeChild(fullPageElem);
+            clearfix && document.body.removeChild(clearfix);
+            fullPageElem = null;
+            clearfix = null;
+            isRun = false;
+        }
     }
 
 
     /************************************************
-     * SCROLLING 
+     * SCROLLING
      ************************************************/
 
     var que = [];
@@ -228,7 +237,7 @@ module.exports = function(Vue) {
 
         var scrollWindow = (elem === document.body);
 
-        var step = function(time) {
+        var step = function (time) {
 
             var now = Date.now();
             var scrollX = 0;
@@ -400,7 +409,7 @@ module.exports = function(Vue) {
 
         // spacebar should trigger button press
         if ((isNodeName(target, 'button') ||
-                isNodeName(target, 'input') && buttonTypes.test(target.type)) &&
+            isNodeName(target, 'input') && buttonTypes.test(target.type)) &&
             event.keyCode === key.spacebar) {
             return true;
         }
@@ -465,9 +474,9 @@ module.exports = function(Vue) {
      * OVERFLOW
      ***********************************************/
 
-    var uniqueID = (function() {
+    var uniqueID = (function () {
         var i = 0;
-        return function(el) {
+        return function (el) {
             return el.uniqueID || (el.uniqueID = i++);
         };
     })();
@@ -479,7 +488,9 @@ module.exports = function(Vue) {
 
     function scheduleClearCache() {
         clearTimeout(clearCacheTimer);
-        clearCacheTimer = setInterval(function() { cache = {}; }, 1 * 1000);
+        clearCacheTimer = setInterval(function () {
+            cache = {};
+        }, 1 * 1000);
     }
 
     function setCache(elems, overflowing) {
@@ -577,7 +588,7 @@ module.exports = function(Vue) {
         deltaBuffer.push(deltaY);
         deltaBuffer.shift();
         clearTimeout(deltaBufferTimer);
-        deltaBufferTimer = setTimeout(function() {
+        deltaBufferTimer = setTimeout(function () {
             if (window.localStorage) {
                 localStorage.SS_deltaBuffer = deltaBuffer.join(',');
             }
@@ -591,8 +602,8 @@ module.exports = function(Vue) {
 
     function allDeltasDivisableBy(divisor) {
         return (isDivisible(deltaBuffer[0], divisor) &&
-            isDivisible(deltaBuffer[1], divisor) &&
-            isDivisible(deltaBuffer[2], divisor));
+        isDivisible(deltaBuffer[1], divisor) &&
+        isDivisible(deltaBuffer[2], divisor));
     }
 
     function isInsideYoutubeVideo(event) {
@@ -601,29 +612,29 @@ module.exports = function(Vue) {
         if (document.URL.indexOf('www.youtube.com/watch') != -1) {
             do {
                 isControl = (elem.classList &&
-                    elem.classList.contains('html5-video-controls'));
+                elem.classList.contains('html5-video-controls'));
                 if (isControl) break;
             } while (elem = elem.parentNode);
         }
         return isControl;
     }
 
-    var requestFrame = (function() {
+    var requestFrame = (function () {
         return (window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            function(callback, element, delay) {
-                window.setTimeout(callback, delay || (1000 / 60));
-            });
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        function (callback, element, delay) {
+            window.setTimeout(callback, delay || (1000 / 60));
+        });
     })();
 
     var MutationObserver = (window.MutationObserver ||
-        window.WebKitMutationObserver ||
-        window.MozMutationObserver);
+    window.WebKitMutationObserver ||
+    window.MozMutationObserver);
 
-    var getScrollRoot = (function() {
+    var getScrollRoot = (function () {
         var SCROLL_ROOT;
-        return function() {
+        return function () {
             if (!SCROLL_ROOT) {
                 var dummy = document.createElement('div');
                 dummy.style.cssText = 'height:10000px;width:1px;';
@@ -694,7 +705,6 @@ module.exports = function(Vue) {
         var isIEWin7 = /Windows NT 6.1/i.test(userAgent) && /rv:11/i.test(userAgent);
         var isEnabledForBrowser = (isChrome || isSafari || isIEWin7) && !isMobile;
 
-        var wheelEvent;
         if ('onwheel' in document.createElement('div'))
             wheelEvent = 'wheel';
         else if ('onmousewheel' in document.createElement('div'))
@@ -705,7 +715,7 @@ module.exports = function(Vue) {
             addEvent('mousedown', mousedown);
             addEvent('load', init);
         }
-
+        isRun = true;
     }
 
     /***********************************************
@@ -722,17 +732,17 @@ module.exports = function(Vue) {
 
     SmoothScroll.run = firstRun;
 
+    window.SmoothScroll = SmoothScroll;
     if (window.SmoothScrollOptions) // async API
         SmoothScroll(window.SmoothScrollOptions)
 
     Object.defineProperties(Vue.prototype, {
         $SmoothScroll: {
-            get: function() {
+            get: function () {
                 return SmoothScroll;
             }
         }
     });
-
 
 
 }

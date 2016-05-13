@@ -1,7 +1,7 @@
 {
   "name": "vue-smoothscroll",
   "homepage": "http://www.eicoding.com",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "it&#x27;s a vuejs version of smoothscroll",
   "author": "teddyzhu",
   "scripts": {
