@@ -11,28 +11,18 @@ npm install vue-smoothscroll
 then in the js file , you can use with router or others
 ``` javascript
 var Vue = require('vue')
-var Router =  require('vue-router');
 var vueSmoothScroll = require('vue-smoothscroll');
-Vue.use(Router);
 Vue.use(vueSmoothScroll);
 
-Router.beforeEach(function (transition) {
-  window.SmoothScroll.destroy();
-  transition.next();
-})
-
-Router.afterEach(function (transition) {
-  window.SmoothScroll.run();
-})
-
 ```
 
-you can alse use it in vue 
-``` javascript
-		this.$SmoothScroll.run();
-		
-		this.$SmoothScroll.destroy();
-
+```html
+   //define a tag
+   <div v-smoothscroll="{ duration : 500, callback: callback , context : undefined }" class="message">
+       message
+   </div>
 ```
-
-
+params
+* `duration` is the total duration of the scroll (optional, defaults to 500ms)
+* `callback` is a function to be executed when the scrolling is over (optional)
+* `context` is the scrolling context (optional, defaults to window, can be any `HTMLElement Object`)
