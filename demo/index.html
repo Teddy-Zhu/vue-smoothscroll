@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vue-smoothscroll</title>
+    <script src="http://cdn.bootcss.com/vue/2.0.3/vue.js" charset="utf-8"></script>
+    <script src="../dist/vue-smoothscroll.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1 class="message">
+            {{ message }}
+        </h1>
+        <div v-smoothscroll="{ duration : 500, callback: test }" class="message">
+            message
+        </div>
+    </div>
+    <style media="screen">
+        #app {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .message {
+            padding: 16px;
+            min-height: 600px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        Vue.use(VueSmoothScroll)
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue smoothscroll!'
+            },
+            methods :{
+              test:function(){
+                console.log('callback');
+              }
+            }
+        })
+    </script>
+</body>
+
+</html>

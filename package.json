@@ -1,26 +1,33 @@
 {
-  "name": "vue-smoothscroll",
-  "homepage": "http://www.eicoding.com",
-  "version": "0.0.4",
-  "description": "it&#x27;s a vuejs version of smoothscroll",
-  "author": "teddyzhu",
-  "scripts": {
-
-  },
-  "dependencies": {
-    "vue": "^1.0.21"
-  },
-  "readme":"README.md",
-  "main": "smoothscroll.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Teddy-Zhu/vue-smoothscroll.git"
-  },
-  "license": "MIT",
-  "devDependencies": {
-  },
-  "files": [
-    "Readme.md",
-    "smoothscroll.js"
-  ]
+    "name": "vue-smoothscroll",
+    "homepage": "http://www.silentgo.com",
+    "version": "0.0.5",
+    "description": "it&#x27;s a vuejs version of smoothscroll",
+    "author": "teddyzhu",
+    "scripts": {
+        "build": "webpack --config build/webpack.config.js"
+    },
+    "dependencies": {
+        "smoothscroll": "^0.2.2",
+        "vue": "^1.0.21"
+    },
+    "readme": "README.md",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Teddy-Zhu/vue-smoothscroll.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "babel-core": "^6.17.0",
+        "babel-loader": "^6.2.5",
+        "babel-preset-es2015": "^6.16.0",
+        "css-loader": "^0.25.0",
+        "style-loader": "^0.13.1",
+        "vue": "^2.0.3",
+        "webpack": "^1.13.2"
+    },
+    "files": [
+        "dist"
+    ]
 }
