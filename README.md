@@ -1,6 +1,6 @@
 # vue-smoothscroll
 
-> it&#x27;s a vuejs version of waves Based on https://github.com/alicelieutier/smoothScroll/blob/master/smoothscroll.js
+> it&#x27;s a vuejs version of smoothscroll Based on https://github.com/alicelieutier/smoothScroll/blob/master/smoothscroll.js
 
 ## How to Use
 
@@ -21,7 +21,14 @@ Vue.use(vueSmoothScroll);
        message
    </div>
 ```
+
+or
+
+```javascript
+    this.$SmoothScroll(target,duration,callback,context);
+```
 params
+* `target` is a `HTMLElement Object` from your document that you want to scroll to, or a numeric position on the page
 * `duration` is the total duration of the scroll (optional, defaults to 500ms)
 * `callback` is a function to be executed when the scrolling is over (optional)
 * `context` is the scrolling context (optional, defaults to window, can be any `HTMLElement Object`)

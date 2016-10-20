@@ -9,13 +9,14 @@
 </head>
 
 <body>
-    <div id="app">
-        <h1 class="message">
+    <div id="app" v-smoothscroll="{ duration : 500, callback: test }" >
+        <h1 id="messageh1" class="message">
             {{ message }}
         </h1>
-        <div v-smoothscroll="{ duration : 500, callback: test }" class="message">
+        <div class="message">
             message
         </div>
+        <button type="button" v-on:click="clickfunc()" class="button">
     </div>
     <style media="screen">
         #app {
@@ -30,6 +31,10 @@
             min-height: 600px;
         }
 
+        .button {
+            width: 100px;
+            height: 30px;
+        }
     </style>
     <script type="text/javascript">
         Vue.use(VueSmoothScroll)
@@ -41,6 +46,9 @@
             methods :{
               test:function(){
                 console.log('callback');
+              },
+              clickfunc :function(){
+                this.$SmoothScroll(document.getElementById('messageh1'));
               }
             }
         })

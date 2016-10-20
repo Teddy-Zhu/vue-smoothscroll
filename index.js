@@ -9,5 +9,10 @@ module.exports = {
                 SmoothScroll(el, binding.value["duration"], binding.value["callback"], binding.value["context"])
             }
         })
+        Object.defineProperty(Vue.prototype, '$SmoothScroll', {
+            get: function () {
+                return SmoothScroll;
+            }
+        });
     }
 }
