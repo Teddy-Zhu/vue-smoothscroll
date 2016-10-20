@@ -10,7 +10,6 @@ npm install vue-smoothscroll
 ```
 then in the js file , you can use with router or others
 ``` javascript
-var Vue = require('vue')
 var vueSmoothScroll = require('vue-smoothscroll');
 Vue.use(vueSmoothScroll);
 
