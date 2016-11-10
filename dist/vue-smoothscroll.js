@@ -54,19 +54,21 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	"use strict";
 
-	let SmoothScroll = __webpack_require__(1);
+	var SmoothScroll = __webpack_require__(1);
 
 	module.exports = {
-	    install(Vue, options = { name: 'smoothscroll' }) {
+	    install: function install(Vue) {
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { name: 'smoothscroll' };
+
 	        Vue.directive(options.name, {
-	            inserted(el, binding) {
+	            inserted: function inserted(el, binding) {
 	                SmoothScroll(el, binding.value["duration"], binding.value["callback"], binding.value["context"]);
 	            }
 	        });
 	        Object.defineProperty(Vue.prototype, '$SmoothScroll', {
-	            get: function () {
+	            get: function get() {
 	                return SmoothScroll;
 	            }
 	        });
