@@ -1,7 +1,7 @@
 {
     "name": "vue-smoothscroll",
     "homepage": "http://www.silentgo.com",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "it&#x27;s a vuejs version of smoothscroll",
     "author": "teddyzhu",
     "scripts": {

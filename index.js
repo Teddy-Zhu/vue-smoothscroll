@@ -1,16 +1,13 @@
-
-
-let SmoothScroll = require("smoothscroll")
-
+var SmoothScroll = require("smoothscroll")
 module.exports = {
-    install(Vue, options = { name: 'smoothscroll' }) {
+    install: function(Vue) {
         Vue.directive(options.name, {
-            inserted(el, binding) {
+            inserted: function(el, binding) {
                 SmoothScroll(el, binding.value["duration"], binding.value["callback"], binding.value["context"])
             }
         })
         Object.defineProperty(Vue.prototype, '$SmoothScroll', {
-            get: function () {
+            get: function() {
                 return SmoothScroll;
             }
         });
