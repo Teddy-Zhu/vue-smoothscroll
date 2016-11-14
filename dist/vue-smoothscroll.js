@@ -56,7 +56,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var SmoothScroll = __webpack_require__(1);
 	module.exports = {
-	    install: function (Vue) {
+	    install: function (Vue, options) {
+	        options = options || { name: 'smoothscroll' };
 	        Vue.directive(options.name, {
 	            inserted: function (el, binding) {
 	                SmoothScroll(el, binding.value["duration"], binding.value["callback"], binding.value["context"]);
