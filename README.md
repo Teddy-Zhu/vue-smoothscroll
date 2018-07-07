@@ -17,7 +17,7 @@ Vue.use(vueSmoothScroll);
 
 ```html
    //define a tag
-   <div v-smoothscroll="{ duration : 500, callback: callback , context : undefined }" class="message">
+   <div v-smoothscroll="{ duration : 500, callback: callback , context : undefined , axis :'y' }" class="message">
        message
    </div>
 ```
