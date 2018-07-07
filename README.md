@@ -25,10 +25,11 @@ Vue.use(vueSmoothScroll);
 or
 
 ```javascript
-    this.$SmoothScroll(target,duration,callback,context);
+    this.$SmoothScroll(target,duration,callback,context，axis);
 ```
 params
 * `target` is a `HTMLElement Object` from your document that you want to scroll to, or a numeric position on the page
 * `duration` is the total duration of the scroll (optional, defaults to 500ms)
 * `callback` is a function to be executed when the scrolling is over (optional)
 * `context` is the scrolling context (optional, defaults to window, can be any `HTMLElement Object`)
+* `axis` is the x,y axis ,the value can be 'y' , 'x' , 'both', 'y' means horizontal direction, 'x' means vertical direction

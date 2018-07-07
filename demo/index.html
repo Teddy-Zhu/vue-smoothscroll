@@ -9,50 +9,50 @@
 </head>
 
 <body>
-    <div id="app" v-smoothscroll="{ duration : 500, callback: test }" >
-        <h1 id="messageh1" class="message">
-            {{ message }}
-        </h1>
-        <div class="message">
-            message
-        </div>
-        <button type="button" v-on:click="clickfunc()" class="button">
+<div id="app" v-smoothscroll="{ duration : 500, callback: test , axis : 'both' }">
+    <h1 id="messageh1" class="message">
+        {{ message }}
+    </h1>
+    <div class="message">
+        message
     </div>
-    <style media="screen">
-        #app {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+    <button type="button" v-on:click="clickfunc()" class="button">Click Me</button>
+</div>
+<style media="screen">
+    #app {
+        min-height: 1500px;
+        min-width: 5000px;
+    }
 
-        .message {
-            padding: 16px;
-            min-height: 600px;
-        }
+    .message {
+        padding: 16px;
+    }
 
-        .button {
-            width: 100px;
-            height: 30px;
-        }
-    </style>
-    <script type="text/javascript">
-        Vue.use(VueSmoothScroll)
-        new Vue({
-            el: '#app',
-            data: {
-                message: 'Hello Vue smoothscroll!'
-            },
-            methods :{
-              test:function(){
+    .button {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        width: 100px;
+        height: 30px;
+    }
+</style>
+<script type="text/javascript">
+    Vue.use(VueSmoothScroll)
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue smoothscroll!'
+        },
+        methods: {
+            test: function () {
                 console.log('callback');
-              },
-              clickfunc :function(){
-                this.$SmoothScroll(document.getElementById('messageh1'));
-              }
+            },
+            clickfunc: function () {
+                this.$SmoothScroll(document.getElementById('messageh1'), 500, this.test, null, 'y');
             }
-        })
-    </script>
+        }
+    })
+</script>
 </body>
 
 </html>
